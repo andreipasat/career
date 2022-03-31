@@ -13,6 +13,17 @@ const RecommendedJobs = (props) => {
             imgSrc: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Linkedin_icon.svg",
             companyName: "company",
             greatFit: true,
+        },
+        {
+            title: "job title",
+            imgSrc: "",
+            companyName: "company",
+            greatFit: true,
+        },
+        {
+            title: "job title",
+            companyName: "company",
+            greatFit: true,
         }
     ]
     return (
@@ -33,7 +44,19 @@ const RecommendedJobs = (props) => {
                             <div>
                                 <div className="space-y-5 w-full h-36">
                                     <div className="w-full flex justify-between space-x-6">
-                                        <img className="w-10 h-10 bg-gray-300 rounded flex-shrink-0" src={job.imgSrc} alt=""/>
+                                        {job.imgSrc 
+                                            ? <img className="w-10 h-10 bg-gray-300 rounded flex-shrink-0" src={job.imgSrc} alt=""/>
+                                            : 
+                                            <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect width="42" height="42" rx="21" fill="#EFF2F9"/>
+                                                    <mask id="mask0_201_3544" maskUnits="userSpaceOnUse" x="11" y="11" width="20" height="20">
+                                                        <rect x="11" y="11" width="20" height="20" fill="#C4C4C4"/>
+                                                    </mask>
+                                                    <g mask="url(#mask0_201_3544)">
+                                                        <path fillRule="evenodd" clipRule="evenodd" d="M19.3335 16.8334C19.3335 16.3731 19.7066 16 20.1668 16H21.8335C22.2937 16 22.6668 16.3731 22.6668 16.8334V17.6667H19.3335V16.8334ZM17.6668 17.6667H15.3335C14.7812 17.6667 14.3335 18.1144 14.3335 18.6667V26.6667C14.3335 27.219 14.7812 27.6667 15.3335 27.6667H26.6668C27.2191 27.6667 27.6668 27.219 27.6668 26.6667V18.6667C27.6668 18.1144 27.2191 17.6667 26.6668 17.6667H24.3335V16.8334C24.3335 15.4527 23.2142 14.3334 21.8335 14.3334H20.1668C18.7861 14.3334 17.6668 15.4527 17.6668 16.8334V17.6667Z" fill="#9FA6BB"/>
+                                                    </g>
+                                                </svg>
+                                        }
         
                                         <a href="#">
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
