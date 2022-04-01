@@ -7,8 +7,6 @@ const getForm = (init = {}) => {
         form[key] = getField(value)
     }
 
-    console.log(form);
-
     return form;
 }
 

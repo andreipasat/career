@@ -1,7 +1,8 @@
 import AppButton from "../Atoms/AppButton";
+import { useState } from "react"
 
 const RecommendedJobs = (props) => {
-    const recommendedJobs = [
+    const initRecommendedJobs = [
         {
             title: "job title",
             imgSrc: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Linkedin_icon.svg",
@@ -26,6 +27,9 @@ const RecommendedJobs = (props) => {
             greatFit: true,
         }
     ]
+    
+    const [recommendedJobs, setRecommendedJobs] = useState(initRecommendedJobs)
+    
     return (
         <div>
             <div className="flex justify-between align-middle py-5 font-semibold">

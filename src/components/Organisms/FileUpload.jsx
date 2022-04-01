@@ -1,20 +1,13 @@
 import AppInputFile from "../Atoms/AppInputFile";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import getForm from "../../hooks/form";
 import http from "../../hooks/http"
 
 const FileUpload = (props) => {
     
     const isPdf = val => {
-        if (val === '') {
-            return true;
-        }
-        if (val.type === 'application/pdf') {
-            return true;
-        }
-        return false;
+        return val === '' || val.type === 'application/pdf';
     }
-    
     
     const initForm = getForm({
         file: {
@@ -23,17 +16,12 @@ const FileUpload = (props) => {
         },
     })
 
-    const [form, setForm] = useState(() => {
-        return initForm;
-    })
-    
+    const [form, setForm] = useState(initForm)
     
     const onChangeFile = (file) => {
         const formChanged = getForm({
-            file: {
-                value: file,
-                validators: {isPdf}
-            }
+            ...form,
+            file: {...form.file, value: file, validators: {isPdf}}
         })
         setForm(formChanged)
         
