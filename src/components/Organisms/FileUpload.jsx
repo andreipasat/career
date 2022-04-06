@@ -27,12 +27,15 @@ const FileUpload = (props) => {
         
         if (formChanged.file.valid && !formChanged.file.errors.isPdf) {
             const formData = new FormData();
-            formData.append('file', formChanged.file.value);
-            http.post('/upload', formData, {
+            formData.append('documents_files', formChanged.file.value);
+            http.post('http://18.217.126.4:8000/classification/', formData, {
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS',
                     "Content-type": "multipart/form-data",
                 },
             });
+            //http.get('http://18.217.126.4:8000/classification/?identifier=1')
         }
         
     }
