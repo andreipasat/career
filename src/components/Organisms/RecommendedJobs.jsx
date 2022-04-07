@@ -1,34 +1,21 @@
 import AppButton from "../Atoms/AppButton";
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import http from "../../hooks/http";
+import useFetchList from "../../hooks/fetchList";
 
 const RecommendedJobs = (props) => {
-    const initRecommendedJobs = [
-        {
-            title: "job title",
-            imgSrc: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Linkedin_icon.svg",
-            companyName: "company",
-            greatFit: true,
-        },
-        {
-            title: "job title",
-            imgSrc: "https://upload.wikimedia.org/wikipedia/commons/e/e9/Linkedin_icon.svg",
-            companyName: "company",
-            greatFit: true,
-        },
-        {
-            title: "job title",
-            imgSrc: "",
-            companyName: "company",
-            greatFit: true,
-        },
-        {
-            title: "job title",
-            companyName: "company",
-            greatFit: true,
-        }
-    ]
     
-    const [recommendedJobs, setRecommendedJobs] = useState(initRecommendedJobs)
+    // const [recommendedJobs, setRecommendedJobs] = useState([])
+
+    const jobsList = useFetchList('http://18.217.126.4:8000/classification/?identifier=1')
+    useEffect(() => {
+        //console.log('render');
+        jobsList.fetchList()
+    }, [])
+
+    const dismissJob = (id) => {
+        jobsList.removeFromList(id)
+    }
     
     return (
         <div>
@@ -42,7 +29,7 @@ const RecommendedJobs = (props) => {
             </div>
             <ul role="list" className="grid auto-rows-auto grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 
-                {recommendedJobs.map((job,idx) => {
+                {jobsList.list.slice(0, 4).map((job,idx) => {
                     return (
                         <li key={job.title + idx} className="col-span-1 bg-white border border-gray-1 rounded-md p-6 min-w-246 max-w-246 max-h-264 min-h-264">
                             <div>
@@ -69,8 +56,8 @@ const RecommendedJobs = (props) => {
                                         </a>
                                     </div>
                                     <div className="space-y-1">
-                                        <h1 className="text-neutral font-sans text-lg">{job.title} </h1>
-                                        <h2 className="text-gray-3 font-sans text-sm">{job.companyName}</h2>
+                                        <h1 className="text-neutral font-sans text-lg">{job.title.substring(0, 20)} {job.title.length >= 20 && '...'}</h1>
+                                        {job.companyName !== 'NaN' && <h2 className="text-gray-3 font-sans text-sm">{job.companyName}</h2>}
                                     </div>
                                 </div>
 
@@ -81,12 +68,12 @@ const RecommendedJobs = (props) => {
                                                 <path d="M8.00008 4.66664C9.41457 4.66664 10.7711 5.22854 11.7713 6.22874C12.7715 7.22893 13.3334 8.58549 13.3334 9.99997C13.3334 11.4145 12.7715 12.771 11.7713 13.7712C10.7711 14.7714 9.41457 15.3333 8.00008 15.3333C6.58559 15.3333 5.22904 14.7714 4.22885 13.7712C3.22865 12.771 2.66675 11.4145 2.66675 9.99997C2.66675 8.58549 3.22865 7.22893 4.22885 6.22874C5.22904 5.22854 6.58559 4.66664 8.00008 4.66664ZM8.00008 5.99997C6.93922 5.99997 5.9218 6.4214 5.17165 7.17155C4.42151 7.92169 4.00008 8.93911 4.00008 9.99997C4.00008 11.0608 4.42151 12.0783 5.17165 12.8284C5.9218 13.5785 6.93922 14 8.00008 14C9.06095 14 10.0784 13.5785 10.8285 12.8284C11.5787 12.0783 12.0001 11.0608 12.0001 9.99997C12.0001 8.93911 11.5787 7.92169 10.8285 7.17155C10.0784 6.4214 9.06095 5.99997 8.00008 5.99997ZM8.00008 6.99997L8.88208 8.78664L10.8534 9.07331L9.42675 10.4633L9.76341 12.4273L8.00008 11.5L6.23675 12.4266L6.57341 10.4633L5.14675 9.07264L7.11808 8.78597L8.00008 6.99997ZM12.0001 1.33331V3.33331L11.0914 4.09197C10.3374 3.69636 9.51412 3.44986 8.66675 3.36597V1.33331H12.0001ZM7.33341 1.33264V3.36597C6.48631 3.44974 5.6633 3.69601 4.90941 4.09131L4.00008 3.33331V1.33331L7.33341 1.33264Z" fill="#207544"/>
                                             </svg>
                                         </div>
-                                        <div className="basis-10/12"><span className="text-green font-sans text-xs">Great fit</span></div>
+                                        { job.greatFit && <div className="basis-10/12"><span className="text-green font-sans text-xs">Great fit</span></div> }
                                     </div>
             
                                     <div className="flex justify-between">
                                         <div>
-                                            <a href="#">
+                                            <a onClick={(e) => {e.preventDefault();dismissJob(job.id)}} href="#">
                                                 <span className="font-semibold font-sans text-gray-0 text-sm">Dismiss</span>
                                             </a>
                                         </div>
