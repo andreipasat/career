@@ -14,8 +14,8 @@ const AppDropdown = ({selected,options, setSelected}) => {
 
             <Menu.Button
                     className="bg-white relative w-full border border-gray-1 rounded-md shadow-sm 
-                    pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 
-                    focus:ring-indigo focus:border-indigo sm:text-sm">
+                    pl-3 pr-10 py-2 text-left cursor-default focus:outline-none 
+                    focus:ring-gray-1 focus:border-gray-1 sm:text-sm">
                 <span className="block truncate text-gray-3">
                     {selected.name}
                 </span>

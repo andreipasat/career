@@ -1,8 +1,14 @@
 import AppDropdown from "../Atoms/AppDropdown";
 
 import useDropdown from "../../hooks/dropdown";
+import useObjectsList from "../../hooks/objectsList";
 
 const JobsSearch = () => {
+
+    const addressOptions = [
+        {val: 'md', name: 'Republic of Moldova'},
+        {val: 'jupiter', name: 'Jupiter'},
+    ]
 
     const salaryOptions = [
         {val: null, name: 'All salaries'},
@@ -12,7 +18,41 @@ const JobsSearch = () => {
         {val: 500000, name: '500000'},
     ]
 
+    const postedTimeOptions = [
+        {val: null, name: 'Posted any time'},
+        {val: '30d', name: 'Within 30 days'},
+        {val: '10d', name: 'Within 10 days'},
+        {val: '5d', name: 'Within 5 days'},
+        {val: '1d', name: 'Within 1 day'},
+    ]
+
+    const boardsOptions = [
+        {val: null, name: 'All boards'},
+        {val: 'zip', name: 'ZipRecruiter'},
+        {val: 'indeed', name: 'Indeed'},
+    ]
+
+    const addressDropdown = useDropdown(addressOptions[0], addressOptions)
     const salaryDropdown = useDropdown(salaryOptions[0], salaryOptions)
+    const postTimeDropdown = useDropdown(postedTimeOptions[0], postedTimeOptions)
+    const boardsDropdown = useDropdown(boardsOptions[0], boardsOptions)
+
+    const jobsList = [
+        {
+            title: 'Project manager', 
+            description : 'Do quis non officia laborum commodo. Ea incididunt nostrud excepteur elit ea ea ad occaecat tempor velit nulla sit cillum est. Nostrud exercitation elit ut mollit aute proident.'
+        },
+        {
+            title: 'Fullstack developer', 
+            description : 'Do quis non officia laborum commodo. Ea incididunt nostrud excepteur elit ea ea ad occaecat tempor velit nulla sit cillum est. Nostrud exercitation elit ut mollit aute proident.'
+        },
+        {
+            title: 'Backend developer', 
+            description : 'Do quis non officia laborum commodo. Ea incididunt nostrud excepteur elit ea ea ad occaecat tempor velit nulla sit cillum est. Nostrud exercitation elit ut mollit aute proident.'
+        }
+    ]
+
+    const jobs = useObjectsList(jobsList)
 
     return (
         <>
@@ -42,22 +82,41 @@ const JobsSearch = () => {
             <div className="p-4 m-auto text-center flex justify-center space-x-2">
                 
                 <div className="w-1/4">
-                    <AppDropdown selected={salaryDropdown.value} setSelected={salaryDropdown.onChange}  options={salaryDropdown.options} />
+                    <AppDropdown selected={addressDropdown.value} setSelected={addressDropdown.onChange}  options={addressDropdown.options} />
                 </div>
-
+                
                 <div className="w-1/4">
                     <AppDropdown selected={salaryDropdown.value} setSelected={salaryDropdown.onChange}  options={salaryDropdown.options} />
                 </div>
 
                 <div className="w-1/4">
-                    <AppDropdown selected={salaryDropdown.value} setSelected={salaryDropdown.onChange}  options={salaryDropdown.options} />
+                    <AppDropdown selected={postTimeDropdown.value} setSelected={postTimeDropdown.onChange}  options={postTimeDropdown.options} />
                 </div>
 
                 <div className="w-1/4">
-                    <AppDropdown selected={salaryDropdown.value} setSelected={salaryDropdown.onChange}  options={salaryDropdown.options} />
+                    <AppDropdown selected={boardsDropdown.value} setSelected={boardsDropdown.onChange}  options={boardsDropdown.options} />
                 </div>
                 
             </div>
+
+            {jobs && 
+                <div className="p-4 m-auto text-left space-y-2">
+                    {jobs.list.map((job, idx) => {
+                        return (
+                            <div key={job.title + idx} className="px-6 py-3 text-gray-3 bg-white border border-gray-1 rounded-lg">
+                                <h1 className="text-neutral text-lg mb-2">{job.title}</h1>
+                                <p>{job.description}</p>
+                                <div className="text-right">
+                                    <a href="#" className="">                            
+                                        <span className="text-sm font-semibold font-sans text-indigo">See more...</span>
+                                    </a>    
+                                </div>
+                            </div>
+                        )
+                    })}
+                    
+                </div>
+            }
         </>
     )    
 }

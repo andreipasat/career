@@ -1,5 +1,5 @@
 import AppInputFile from "../Atoms/AppInputFile";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import getForm from "../../hooks/form";
 import http from "../../hooks/http"
 
