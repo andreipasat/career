@@ -100,21 +100,24 @@ const JobsSearch = () => {
             </div>
 
             {jobs && 
-                <div className="p-4 m-auto text-left space-y-2">
-                    {jobs.list.map((job, idx) => {
-                        return (
-                            <div key={job.title + idx} className="px-6 py-3 text-gray-3 bg-white border border-gray-1 rounded-lg">
-                                <h1 className="text-neutral text-lg mb-2">{job.title}</h1>
-                                <p>{job.description}</p>
-                                <div className="text-right">
-                                    <a href="#" className="">                            
-                                        <span className="text-sm font-semibold font-sans text-indigo">See more...</span>
-                                    </a>    
+                <div>
+                    <div className="px-4 pt-4 text-gray-3">{jobs.list.length} jobs</div>
+                    <div className="p-4 m-auto text-left space-y-2">
+                        {jobs.list.map((job, idx) => {
+                            return (
+                                <div key={job.title + idx} className="px-6 py-3 text-gray-3 bg-white border border-gray-1 rounded-lg">
+                                    <h1 className="text-neutral text-lg mb-2">{job.title}</h1>
+                                    <p>{job.description}</p>
+                                    <div className="text-right">
+                                        <a href="#" className="">                            
+                                            <span className="text-sm font-semibold font-sans text-indigo">See more...</span>
+                                        </a>    
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })}
-                    
+                            )
+                        })}
+                        
+                    </div>
                 </div>
             }
         </>
