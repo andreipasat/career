@@ -1,9 +1,14 @@
 import AppInputFile from "../Atoms/AppInputFile";
-import {useState} from "react";
+import {useState, useContext} from "react";
 import getForm from "../../hooks/form";
 import http from "../../hooks/http"
+import { Context } from "../../hooks/context";
+import AppLoader from "../Atoms/AppLoader";
 
 const FileUpload = (props) => {
+
+    const {setRecommendedJobsIdentifier} = useContext(Context)
+    const [loading, setLoading] = useState(false)
     
     const isPdf = val => {
         return val === '' || val.type === 'application/pdf';
@@ -26,6 +31,7 @@ const FileUpload = (props) => {
         setForm(formChanged)
         
         if (formChanged.file.valid && !formChanged.file.errors.isPdf) {
+            setLoading(true)
             const formData = new FormData();
             formData.append('documents_files', formChanged.file.value);
             const response = await http.post('http://18.217.126.4:8000/classification/', formData, {
@@ -33,6 +39,9 @@ const FileUpload = (props) => {
                     "Content-type": "multipart/form-data",
                 },
             });
+            
+            setRecommendedJobsIdentifier(response.data.identifier)
+            setLoading(false)
 
         }
         
@@ -47,6 +56,7 @@ const FileUpload = (props) => {
                     {!form.file.valid && <span className="text-red text-sm">File CV requires only pdf format</span>}
                 </div>
             </div>
+            { loading && <div><AppLoader /></div> }
         </div>
     )
 }
